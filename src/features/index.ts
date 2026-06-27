@@ -1,35 +1,20 @@
 import * as vscode from 'vscode';
 
-import {
-  registerOpenCurrentFileCommand,
-} from './commands/openCurrentFile.command.js';
+import { VIEWS } from '../shared/constants/views';
+import { MarkdownCustomEditorProvider } from './MarkdownCustomEditorProvider';
 
-import {
-  registerOpenPreviewCommand,
-} from './commands/openPreview.command.js';
-
-import {
-  registerRefreshPreviewCommand,
-} from './commands/refreshPreview.command.js';
-
-export function registerMarkdownPreview(
+export function registerFeatures(
   context: vscode.ExtensionContext,
 ): void {
-  context.subscriptions.push(
-    registerOpenCurrentFileCommand(
-      context,
-    ),
-  );
+  const provider =
+    new MarkdownCustomEditorProvider(
+      context.extensionUri,
+    );
 
   context.subscriptions.push(
-    registerOpenPreviewCommand(
-      context,
-    ),
-  );
-
-  context.subscriptions.push(
-    registerRefreshPreviewCommand(
-      context,
+    vscode.window.registerCustomEditorProvider(
+      VIEWS.MARKDOWN_EDITOR,
+      provider,
     ),
   );
 }

@@ -1,13 +1,11 @@
 import * as vscode from 'vscode';
 
-import {
-  registerMarkdownPreview,
-} from './features/index.js';
+import { registerFeatures } from './features';
 
 export function activate(
   context: vscode.ExtensionContext,
 ) {
-  registerMarkdownPreview(context);
+  registerFeatures(context);
 }
 
 export function deactivate() {}

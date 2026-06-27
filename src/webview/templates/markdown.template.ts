@@ -1,56 +1,85 @@
 export interface MarkdownTemplateProps {
   body: string;
-  stylesUri: string;
+  markdownCssUri: string;
+  toolbarCssUri: string;
   scriptUri: string;
   nonce: string;
   cspSource: string;
+  fileName?: string;
 }
 
 export function buildMarkdownTemplate({
   body,
-  stylesUri,
+  markdownCssUri,
+  toolbarCssUri,
   scriptUri,
   nonce,
   cspSource,
+  fileName = 'Preview',
 }: MarkdownTemplateProps): string {
   return `
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
 
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="
-            default-src 'none';
-            img-src ${cspSource} https: data:;
-            style-src ${cspSource} 'unsafe-inline';
-            script-src 'nonce-${nonce}';
-            font-src ${cspSource};
-          "
-        />
+      <meta
+        http-equiv="Content-Security-Policy"
+        content="
+          default-src 'none';
+          img-src ${cspSource} https: data:;
+          style-src ${cspSource} 'unsafe-inline';
+          script-src 'nonce-${nonce}';
+          font-src ${cspSource};
+        "
+      />
 
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+      />
 
-        <link
-          rel="stylesheet"
-          href="${stylesUri}"
-        />
+      <link
+        rel="stylesheet"
+        href="${markdownCssUri}"
+      />
 
-        <title>Markdown Preview</title>
-      </head>
+      <link
+        rel="stylesheet"
+        href="${toolbarCssUri}"
+      />
 
-      <body class="markdown-body">
-        ${body}
+      <title>${fileName}</title>
+    </head>
 
-        <script
-          nonce="${nonce}"
-          src="${scriptUri}"
-        ></script>
-      </body>
-    </html>
+    <body>
+      <div
+        class="topbar"
+        data-filename="${fileName}"
+      >
+        <div class="topbar-left">
+          <span class="filename">
+          </span>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="edit-button">
+            Edit
+          </button>
+        </div>
+      </div>
+
+      <main class="content">
+        <article class="markdown-body">
+          ${body}
+        </article>
+      </main>
+
+      <script
+        nonce="${nonce}"
+        src="${scriptUri}"
+      ></script>
+    </body>
+  </html>
   `;
 }

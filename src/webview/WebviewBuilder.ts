@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import * as vscode from 'vscode';
 
 import { createNonce } from '../shared/utils/nonce.util.js';
@@ -12,33 +13,60 @@ export class WebviewBuilder {
   build(
     webview: vscode.Webview,
     html: string,
+    fileName = 'Preview',
   ): string {
     const nonce = createNonce();
 
-    const stylesUri = getWebviewUri(
-      webview,
-      this.extensionUri,
-      'src',
-      'webview',
-      'assets',
-      'github-markdown.css',
-    );
+    const markdownCssUri =
+      getWebviewUri(
+        webview,
+        this.extensionUri,
+        'src',
+        'webview',
+        'assets',
+        'markdown.css',
+      );
 
-    const scriptUri = getWebviewUri(
-      webview,
-      this.extensionUri,
-      'src',
-      'webview',
-      'assets',
-      'main.js',
-    );
+    const toolbarCssUri =
+      getWebviewUri(
+        webview,
+        this.extensionUri,
+        'src',
+        'webview',
+        'assets',
+        'toolbar.css',
+      );
+
+    const scriptUri =
+      getWebviewUri(
+        webview,
+        this.extensionUri,
+        'src',
+        'webview',
+        'assets',
+        'main.js',
+      );
 
     return buildMarkdownTemplate({
       body: html,
-      stylesUri: stylesUri.toString(),
-      scriptUri: scriptUri.toString(),
+      markdownCssUri:
+        markdownCssUri.toString(),
+      toolbarCssUri:
+        toolbarCssUri.toString(),
+      scriptUri:
+        scriptUri.toString(),
       nonce,
-      cspSource: webview.cspSource,
+      cspSource:
+        webview.cspSource,
+      fileName,
     });
+  }
+
+  getFileName(
+    uri: vscode.Uri,
+  ): string {
+    return path.basename(
+      uri.fsPath,
+    );
   }
 }

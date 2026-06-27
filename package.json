@@ -16,18 +16,16 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [
+    "customEditors": [
       {
-        "command": "githubMarkdown.openCurrentFile",
-        "title": "Markdown Preview: Open Current File"
-      },
-      {
-        "command": "githubMarkdown.openPreview",
-        "title": "Markdown Preview: Open"
-      },
-      {
-        "command": "githubMarkdown.refreshPreview",
-        "title": "Markdown Preview: Refresh"
+        "viewType": "githubMarkdown.markdownEditor",
+        "displayName": "GitHub Markdown Preview",
+        "selector": [
+          {
+            "filenamePattern": "*.md"
+          }
+        ],
+        "priority": "default"
       }
     ]
   },
