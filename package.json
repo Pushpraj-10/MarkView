@@ -1,25 +1,54 @@
 {
-  "name": "github-markdown-preview",
-  "displayName": "github-markdown-preview",
-  "description": "Preview Markdown files in a GitHub-style rendered sidebar.",
-  "version": "0.0.1",
+  "name": "markview",
+  "displayName": "MarkView",
+  "description": "A beautiful GitHub-style Markdown viewer and editor for Visual Studio Code.",
+  "version": "0.1.0",
+  "publisher": "pushpraj-10",
+  "license": "MIT",
+  "icon": "images/logo.png",
+  "preview": false,
   "engines": {
     "vscode": "^1.125.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Programming Languages",
+    "Formatters"
+  ],
+  "keywords": [
+    "markdown",
+    "readme",
+    "preview",
+    "viewer",
+    "github",
+    "documentation",
+    "editor",
+    "md"
+  ],
+  "galleryBanner": {
+    "color": "#0D1117",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pushpraj-10/MarkView"
+  },
+  "homepage": "https://github.com/Pushpraj-10/MarkView#readme",
+  "bugs": {
+    "url": "https://github.com/Pushpraj-10/MarkView/issues"
+  },
+  "extensionKind": [
+    "workspace"
   ],
   "activationEvents": [
-    "onCommand:githubMarkdown.openCurrentFile",
-    "onCommand:githubMarkdown.openPreview",
-    "onCommand:githubMarkdown.refreshPreview"
+    "onCustomEditor:githubMarkdown.markdownEditor"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "customEditors": [
       {
         "viewType": "githubMarkdown.markdownEditor",
-        "displayName": "GitHub Markdown Preview",
+        "displayName": "MarkView",
         "selector": [
           {
             "filenamePattern": "*.md"
